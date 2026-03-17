@@ -91,6 +91,10 @@ class LinkResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('analytics')
+                    ->label('إحصائيات')
+                    ->icon('heroicon-o-chart-bar')
+                    ->url(fn($record) => LinkResource::getUrl('analytics', ['record' => $record])),
             ])
             ->emptyStateHeading('لا توجد روابط بعد')
             ->emptyStateDescription('ابدأ بإضافة رابطك الأول!')
@@ -107,6 +111,7 @@ class LinkResource extends Resource
             'index'  => Pages\ListLinks::route('/'),
             'create' => Pages\CreateLink::route('/create'),
             'edit'   => Pages\EditLink::route('/{record}/edit'),
+            'analytics' => Pages\LinkAnalytics::route('/{record}/analytics'),
         ];
     }
 }

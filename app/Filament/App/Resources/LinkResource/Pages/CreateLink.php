@@ -40,7 +40,7 @@ class CreateLink extends CreateRecord
             ->actions([
                 \Filament\Notifications\Actions\Action::make('upgrade')
                     ->label('Upgrade to Pro')
-                    ->url('/app/billing'),
+                    ->url('/app/billing/checkout'),
             ])
             ->send();
 
