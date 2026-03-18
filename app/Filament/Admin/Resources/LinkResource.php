@@ -12,28 +12,28 @@ class LinkResource extends Resource
 {
     protected static ?string $model = Link::class;
     protected static ?string $navigationIcon = 'heroicon-o-link';
-    protected static ?string $navigationLabel = 'كل الروابط';
+    protected static ?string $navigationLabel = 'All Links';
 
     public static function form(Forms\Form $form): Forms\Form
     {
         return $form->schema([
             Forms\Components\TextInput::make('original_url')
-                ->label('الرابط الأصلي')
+                ->label('Original URL')
                 ->url()
                 ->required(),
 
             Forms\Components\TextInput::make('short_code')
-                ->label('الكود')
+                ->label('Short Code')
                 ->required(),
 
             Forms\Components\Select::make('user_id')
-                ->label('المستخدم')
+                ->label('User')
                 ->relationship('user', 'name')
                 ->searchable()
                 ->required(),
 
             Forms\Components\Toggle::make('is_active')
-                ->label('مفعّل؟')
+                ->label('Activated?')
                 ->default(true),
         ]);
     }
@@ -43,40 +43,40 @@ class LinkResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('المستخدم')
+                    ->label('User')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('الاسم')
+                    ->label('Title')
                     ->default('—'),
 
                 Tables\Columns\TextColumn::make('short_code')
-                    ->label('الكود')
+                    ->label('Short Code')
                     ->badge()
                     ->copyable()
                     ->copyableState(fn($state) => url('/r/' . $state)),
 
                 Tables\Columns\TextColumn::make('clicks_count')
-                    ->label('النقرات')
+                    ->label('Total Clicks')
                     ->counts('clicks')
                     ->badge()
                     ->color('success'),
 
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('مفعّل')
+                    ->label('Activated')
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('تاريخ الإنشاء')
+                    ->label('Creation Date')
                     ->date()
                     ->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('is_active')
-                    ->label('الحالة')
+                    ->label('Status')
                     ->options([
-                        '1' => 'مفعّل',
-                        '0' => 'معطّل',
+                        '1' => 'Activated',
+                        '0' => 'Deactivated',
                     ]),
             ])
             ->actions([

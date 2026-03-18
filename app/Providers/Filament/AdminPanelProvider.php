@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->pages([Pages\Dashboard::class])
             ->widgets([
-                Widgets\AccountWidget::class,
+                // Widgets\AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -50,8 +50,8 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
                 EnsureUserIsAdmin::class,
             ])->widgets([
-                Widgets\AccountWidget::class,
+                // Widgets\AccountWidget::class,
                 \App\Filament\Admin\Widgets\AdminStatsWidget::class,
-            ]);
+            ])->brandName('Snip');
     }
 }

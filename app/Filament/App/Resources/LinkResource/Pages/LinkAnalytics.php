@@ -74,7 +74,7 @@ class LinkAnalytics extends Page
     {
         return [
             Action::make('back')
-                ->label('رجوع للروابط')
+                ->label('Back to Links')
                 ->icon('heroicon-o-arrow-right')
                 ->url(LinkResource::getUrl('index')),
         ];

@@ -12,7 +12,7 @@ class LinkResource extends Resource
 {
     protected static ?string $model = Link::class;
     protected static ?string $navigationIcon = 'heroicon-o-link';
-    protected static ?string $navigationLabel = 'روابطي';
+    protected static ?string $navigationLabel = 'My Links';
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
@@ -24,29 +24,29 @@ class LinkResource extends Resource
     {
         return $form->schema([
             Forms\Components\TextInput::make('original_url')
-                ->label('الرابط الأصلي')
+                ->label('Original URL')
                 ->url()
                 ->required()
                 ->placeholder('https://example.com/very-long-url'),
 
             Forms\Components\TextInput::make('title')
-                ->label('اسم الرابط')
-                ->placeholder('مثال: موقعي الشخصي'),
+                ->label('Title')
+                ->placeholder('Example: My Personal Website'),
 
             Forms\Components\TextInput::make('short_code')
-                ->label('الكود المختصر')
+                ->label('Short Code')
                 ->unique(ignoreRecord: true)
                 ->maxLength(50)
                 ->rules(['max:50', 'alpha_num'])
-                ->placeholder('يتولد أوتوماتيك لو تركته فاضي')
-                ->helperText('حروف وأرقام بس، 50 حرف كحد أقصى'),
+                ->placeholder('Will be generated automatically if left empty')
+                ->helperText('Letters and numbers only, up to 50 characters'),
 
             Forms\Components\DateTimePicker::make('expires_at')
-                ->label('تاريخ الانتهاء')
-                ->helperText('اتركه فاضي لو مش عايز ينتهي'),
+                ->label('Expiration Date')
+                ->helperText('Leave empty if you don\'t want it to expire'),
 
             Forms\Components\Toggle::make('is_active')
-                ->label('مفعّل؟')
+                ->label('Activated?')
                 ->default(true),
         ]);
     }
@@ -56,35 +56,35 @@ class LinkResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->label('الاسم')
-                    ->default('بدون اسم')
+                    ->label('Title')
+                    ->default('No Title')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('short_code')
-                    ->label('الرابط القصير')
+                    ->label('Short Code')
                     ->badge()
                     ->copyable()
-                    ->copyMessage('تم النسخ!')
+                    ->copyMessage('Copied!')
                     ->copyableState(fn($state) => url('/r/' . $state))
                     ->formatStateUsing(fn($state) => url('/r/' . $state)),
 
                 Tables\Columns\TextColumn::make('total_clicks')
-                    ->label('النقرات')
+                    ->label('Total Clicks')
                     ->badge()
                     ->color('success'),
 
                 Tables\Columns\TextColumn::make('clicks_today')
-                    ->label('اليوم')
+                    ->label('Today')
                     ->badge()
                     ->color('info'),
 
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('مفعّل')
+                    ->label('Activated')
                     ->boolean(),
 
                 Tables\Columns\TextColumn::make('expires_at')
-                    ->label('ينتهي')
-                    ->formatStateUsing(fn($state) => $state ? \Carbon\Carbon::parse($state)->format('Y-m-d') : 'لا ينتهي')
+                    ->label('Expires')
+                    ->formatStateUsing(fn($state) => $state ? \Carbon\Carbon::parse($state)->format('Y-m-d') : 'Never')
                     ->badge()
                     ->color(fn($state) => $state ? 'warning' : 'gray'),
             ])
@@ -92,15 +92,15 @@ class LinkResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('analytics')
-                    ->label('إحصائيات')
+                    ->label('Analytics')
                     ->icon('heroicon-o-chart-bar')
                     ->url(fn($record) => LinkResource::getUrl('analytics', ['record' => $record])),
             ])
-            ->emptyStateHeading('لا توجد روابط بعد')
-            ->emptyStateDescription('ابدأ بإضافة رابطك الأول!')
+            ->emptyStateHeading('No links yet')
+            ->emptyStateDescription('Get started by creating your first link!')
             ->emptyStateActions([
                 Tables\Actions\Action::make('create')
-                    ->label('+ أضف رابط')
+                    ->label('+ Create Link')
                     ->url(LinkResource::getUrl('create')),
             ]);
     }

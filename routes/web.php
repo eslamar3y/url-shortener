@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/r/{code}', [RedirectController::class, 'handle']);
@@ -16,3 +17,7 @@ Route::post('/stripe/webhook', [
     \Laravel\Cashier\Http\Controllers\WebhookController::class,
     'handleWebhook'
 ]);
+
+
+
+Route::get('/', [LandingController::class, 'index'])->name('landing');

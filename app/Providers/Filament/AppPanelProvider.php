@@ -38,8 +38,8 @@ class AppPanelProvider extends PanelProvider
             ])
             // ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -58,6 +58,10 @@ class AppPanelProvider extends PanelProvider
                 \App\Filament\App\Widgets\StatsOverview::class,
                 // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
-            ]);
+            ])
+            ->login()
+            ->registration()
+            ->brandName('Snip')
+            ;
     }
 }

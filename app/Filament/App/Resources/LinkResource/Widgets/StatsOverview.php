@@ -55,20 +55,20 @@ class StatsOverview extends BaseWidget
         ->whereDate('clicked_at', today())->count();
 
     return [
-        Stat::make('🔗 روابطي', $myLinkIds->count() . ' / ' . $limit)
-            ->description('عدد الروابط المضافة')
+        Stat::make('🔗 My Links', $myLinkIds->count() . ' / ' . $limit)
+            ->description('Number of links added')
             ->color($user->linksLimitReached() ? 'danger' : 'success'),
 
-        Stat::make('👆 إجمالي النقرات', $totalClicks)
-            ->description('مجموع كل النقرات')
+        Stat::make('👆 Total Clicks', $totalClicks)
+            ->description('Total clicks across all links')
             ->color('info'),
 
-        Stat::make('📅 نقرات اليوم', $clicksToday)
-            ->description('النقرات منذ منتصف الليل')
+        Stat::make('📅 Today', $clicksToday)
+            ->description('Clicks since midnight')
             ->color('warning'),
 
-        Stat::make('💎 الخطة', $user->isPro() ? 'Pro ✅' : 'Free')
-            ->description($user->isPro() ? 'إدارة الاشتراك' : 'Upgrade للـ Pro')
+        Stat::make('💎 Plan', $user->isPro() ? 'Pro ✅' : 'Free')
+            ->description($user->isPro() ? 'Manage subscription' : 'Upgrade to Pro')
             ->url($user->isPro() ? '/app/billing/portal' : '/app/billing/checkout')
             ->color($user->isPro() ? 'success' : 'gray'),
     ];

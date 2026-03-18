@@ -13,19 +13,19 @@ class AdminStatsWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('👥 إجمالي المستخدمين', User::count())
+            Stat::make('👥 Total Users', User::count())
                 ->description('Pro: ' . User::whereHas('subscriptions', fn($q) => $q->where('stripe_status', 'active'))->count())
                 ->color('info'),
 
-            Stat::make('🔗 إجمالي الروابط', Link::count())
-                ->description('اليوم: ' . Link::whereDate('created_at', today())->count())
+            Stat::make('🔗 Total Links', Link::count())
+                ->description('Today: ' . Link::whereDate('created_at', today())->count())
                 ->color('success'),
 
-            Stat::make('👆 إجمالي النقرات', LinkClick::count())
-                ->description('اليوم: ' . LinkClick::whereDate('clicked_at', today())->count())
+            Stat::make('👆 Total Clicks', LinkClick::count())
+                ->description('Today: ' . LinkClick::whereDate('clicked_at', today())->count())
                 ->color('warning'),
 
-            Stat::make('💰 المشتركين Pro',
+            Stat::make('💰 Pro Subscribers',
                 User::whereHas('subscriptions', fn($q) => $q->where('stripe_status', 'active'))->count())
                 ->color('danger'),
         ];
